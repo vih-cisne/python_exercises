@@ -21,7 +21,7 @@ class BlackJackTest(unittest.TestCase):
                 ('Q', 10), ('K', 10)]
 
         for variant, (card, value) in enumerate(data, 1):
-            #with self.subTest('variation #{}'.format(variant), input=card, output=value):
+            with self.subTest('variation #{}'.format(variant), input=card, output=value):
                 error_msg = 'Expected {} as the value of {}.'.format(value, card)
 
                 self.assertEqual(value_of_card(card), value, msg=error_msg)
@@ -40,7 +40,7 @@ class BlackJackTest(unittest.TestCase):
                 ('4', '8', '8')]
 
         for variant, (card_one, card_two, result) in enumerate(data, 1):
-            #with self.subTest('variation #{}'.format(variant), card_one=card_one, card_two=card_two, output=result):
+            with self.subTest('variation #{}'.format(variant), card_one=card_one, card_two=card_two, output=result):
                 error_msg = 'Expected {} as the higher value of the cards {}, {}.'.format(result, card_one, card_two)
 
                 self.assertEqual(higher_card(card_one, card_two), result, msg=error_msg)
@@ -54,7 +54,7 @@ class BlackJackTest(unittest.TestCase):
                 ('K', 'K', 1), ('2', 'A', 1)]
 
         for variant, (card_one, card_two, ace_value) in enumerate(data, 1):
-            #with self.subTest('variation #{}'.format(variant), card_one=card_one, card_two=card_two, ace_value=ace_value):
+            with self.subTest('variation #{}'.format(variant), card_one=card_one, card_two=card_two, ace_value=ace_value):
                 error_msg = 'Expected {} as the value of an ace card when the hand has {}, {}.'.format(ace_value, card_one, card_two)
 
                 self.assertEqual(value_of_ace(card_one, card_two), ace_value, msg=error_msg)
@@ -69,7 +69,7 @@ class BlackJackTest(unittest.TestCase):
                 (('Q', 'K'), False)]
 
         for variant, (hand, blackjack) in enumerate(data, 1):
-            #with self.subTest('variation #{}'.format(variant), input=hand, output=blackjack):
+            with self.subTest('variation #{}'.format(variant), input=hand, output=blackjack):
                 error_msg='Hand {} {} a blackjack.'.format(hand, "is" if blackjack else "is not")
 
                 self.assertEqual( is_blackjack(*hand), blackjack, msg=error_msg)
@@ -82,7 +82,7 @@ class BlackJackTest(unittest.TestCase):
                 (('10', 'A'), False), (('10', '9'), False)]
 
         for variant, (hand, split_pairs) in enumerate(data, 1):
-            #with self.subTest('variation #{}'.format(variant), input=hand, output=split_pairs):
+            with self.subTest('variation #{}'.format(variant), input=hand, output=split_pairs):
                 error_msg='Hand {} {} be split into pairs.'.format(hand, "can" if split_pairs else "cannot")
 
                 self.assertEqual(can_split_pairs(*hand), split_pairs, msg=error_msg)
@@ -95,7 +95,7 @@ class BlackJackTest(unittest.TestCase):
                 (('A', 'A'), False), (('10', '2'), False), (('10', '9'), False)]
 
         for variant, (hand, double_down) in enumerate(data, 1):
-            #with self.subTest('variation #{}'.format(variant), input=hand, output=double_down):
+            with self.subTest('variation #{}'.format(variant), input=hand, output=double_down):
                 error_msg = 'Hand {} {} be doubled down.'.format(hand, "can" if double_down else "cannot")
 
                 self.assertEqual(can_double_down(*hand), double_down, msg=error_msg)
