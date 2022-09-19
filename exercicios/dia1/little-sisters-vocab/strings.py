@@ -1,3 +1,5 @@
+import re
+
 def add_prefix_un(word):
     """
     :param word: str of a root word
@@ -5,11 +7,18 @@ def add_prefix_un(word):
     This function takes `word` as a parameter and
     returns a new word with an 'un' prefix.
     """
-
-    pass
+    return 'un' + word
 
 
 def make_word_groups(vocab_words):
+    prefix = vocab_words[0]
+    result = [prefix]
+
+    for word in vocab_words[1:]:
+        new_word = prefix + word
+        result.append(new_word)
+
+    return ' :: '.join(result)
     """
     :param vocab_words: list of vocabulary words with a prefix.
     :return: str of prefix followed by vocabulary words with
@@ -19,8 +28,6 @@ def make_word_groups(vocab_words):
      by ' :: '.
     """
 
-    pass
-
 
 def remove_suffix_ness(word):
     """
@@ -28,11 +35,21 @@ def remove_suffix_ness(word):
     :return: str of word with suffix removed & spelling adjusted.
     This function takes in a word and returns the base word with `ness` removed.
     """
+    #word[:-4]
+    result = word.removesuffix('ness')
 
-    pass
+    if result[-1] == 'i':
+        result = result[:-1] + 'y'
+
+    return result
 
 
 def adjective_to_verb(sentence, index):
+    #sentence.replace('.', '')
+    sentence_without_marks = re.sub(r"""[!?'".<>(){}@%&*/[/]""", "", sentence)
+    words = sentence_without_marks.split(' ')
+
+    return words[index] + 'en'
     """
     :param sentence: str that uses the word in sentence
     :param index:  index of the word to remove and transform
@@ -43,4 +60,4 @@ def adjective_to_verb(sentence, index):
     adjective as a verb.
     """
 
-    pass
+    
