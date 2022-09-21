@@ -5,20 +5,35 @@ class PhoneNumber:
     def __init__(self, number):
         self.number = self.format_number(number)
 
+    def pretty(self):
+        number_pretty = "({})-{}-{}".format( self.area_code, self.exchange, self.subscriber_number)
+
+        return number_pretty
+
     def format_number(self, number):
 
         number_clean = re.sub(r"-", " ", number)
-        number_clean = re.sub(r"""[.+]""", " ", number_clean)
-        number_clean = re.sub(r"""[()]""", "", number_clean)
+        number_clean = re.sub(r"[.+]", " ", number_clean)
+        number_clean = re.sub(r"[()]", "", number_clean)
         
         groups = number_clean.split()
-        self.handle_errors(groups)
 
         if len(groups) > 3:
+            if not groups[0].startswith('1'):
+                    raise ValueError("11 digits must start with 1")
             groups = groups[len(groups)-3:]
+        if len(groups) == 1:
+            if len(groups[0]) == 11:
+                if not groups[0].startswith('1'):
+                    raise ValueError("11 digits must start with 1")
+                groups[0] = groups[0][1:]
         
 
         number_formated = ''.join(groups)
+
+        self.errors_letters_or_punctuations(number_formated)
+        self.handle_errors(groups)
+
         return number_formated
 
     def handle_errors(self, number_groups):
@@ -26,40 +41,38 @@ class PhoneNumber:
         len_words = functools.reduce(lambda acc, group: acc+len(group), number_groups,0)
 
         if len(number_groups) == 1:
-            if len(number_groups[0]) == 11:
-                exchange = number_groups[0][1]
-                area = number_groups[0][4]
-            else:
-                exchange = number_groups[0][0]
-                area = number_groups[0][3]
+            number_groups = [number_groups[0][0:3],number_groups[0][3:6], number_groups[0][6:10]]
 
-        else:
-            exchange = number_groups[0]
-            area = number_groups[1]
+        self.exchange = number_groups[1]
+        self.area_code = number_groups[0]
+        self.subscriber_number = number_groups[2]
 
         if len_words < 10:
             raise ValueError("incorrect number of digits")
         if len_words > 11:
             raise ValueError("more than 11 digits")
-        if len_words == 11 and not number_groups[0].startswith('1'):
-            raise ValueError("11 digits must start with 1")
         else:
-            if exchange.startswith('0'):
+            if self.area_code.startswith('0'):
                 raise ValueError("area code cannot start with zero")
-            if exchange.startswith('1'):
+            if self.area_code.startswith('1'):
                 raise ValueError("area code cannot start with one")
-            if area.startswith('0'):
+            if self.exchange.startswith('0'):
                 raise ValueError("exchange code cannot start with zero")
-            if area.startswith('1'):
+            if self.exchange.startswith('1'):
                 raise ValueError("exchange code cannot start with one")
 
+    def errors_letters_or_punctuations(self, number):
+        find_letters = re.search(r"[a-zA-Z]", number)
+        find_punctuations = re.search(r"[?@_:!]", number)
+
+        if find_letters != None:
+            raise ValueError("letters not permitted")
+        if find_punctuations != None:
+            raise ValueError("punctuations not permitted")
 
 
 
 
-# if a phone number has punctuation in place of some digits.
-#raise ValueError("punctuations not permitted")
-# if a phone number has letters in place of some digits.
-#raise ValueError("letters not permitted")
+
 
 
