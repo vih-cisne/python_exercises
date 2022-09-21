@@ -26,6 +26,13 @@ class WordSearch:
         vert_top_to_bottom = self.search_top_to_bottom(word)
         vert_bottom_to_top = self.search_bottom_to_top(word)
 
+        diag_top_left_to_bottom_right = self.search_top_left_to_bottom_right(word)
+        diag_top_right_to_bottom_left = self.search_top_right_to_bottom_left(word)
+
+        diag_bottom_left_to_top_right = self.search_bottom_left_to_top_right(word)
+        diag_bottom_right_to_top_left = self.search_bottom_right_to_top_left(word)
+
+
         if line_left_to_right  != None:
             return line_left_to_right
         
@@ -37,6 +44,19 @@ class WordSearch:
         
         if vert_bottom_to_top != None:
             return vert_bottom_to_top
+
+        if diag_top_left_to_bottom_right != None:
+            return diag_top_left_to_bottom_right
+        
+        if diag_top_right_to_bottom_left != None:
+            return diag_top_right_to_bottom_left
+
+        if diag_bottom_left_to_top_right != None:
+            return diag_bottom_left_to_top_right
+        
+        if diag_bottom_right_to_top_left != None:
+            return diag_bottom_right_to_top_left
+
 
     
     def search_line_left_to_right(self, word):
@@ -83,6 +103,119 @@ class WordSearch:
             if finded == len(word):
                 return Point(x,y)
 
+    def search_top_left_to_bottom_right(self, word):
+
+        finded = 0
+        x = None
+        y = 0
+
+        for index, line in enumerate(self.puzzle):
+            position = -1
+            for i,char in enumerate(line):
+                if char == word[finded] and (x == None or i == x+1): 
+                    position = i
+            
+            if position == -1:
+                x = None
+                finded = 0
+            else:
+                if x == None and finded == 0:
+                    finded += 1
+                    y = index
+                    x = position
+                elif x + 1 == position :
+                    finded += 1
+                    x = position 
+            if finded == len(word):
+                return Point(x-len(word)+1,y)
+
+    def search_top_right_to_bottom_left(self, word):
+
+        finded = 0
+        x = None
+        y = 0
+
+
+        for index, line in enumerate(self.puzzle):
+            position = -1
+            
+            for i,char in enumerate(line):
+                if char == word[finded] and (x == None or i == x-1): 
+                    position = i 
+            
+            if position == -1:
+                x = None
+                finded = 0
+                for i,char in enumerate(line):
+                    if char == word[finded] and (x == None or i == x-1): 
+                        position = i
+            if x == None and finded == 0 and position != -1:
+                finded += 1
+                y = index
+                x = position
+            elif x == position + 1:
+                finded += 1
+                x = position
+
+            if finded == len(word):
+                return Point(x+len(word)-1,y)
+
+    def search_bottom_right_to_top_left(self, word):
+        word_reverse = list(word)
+        word_reverse.reverse()
+        word_reverse = ''.join(word_reverse)
+
+        finded = 0
+        x = None
+
+        for index, line in enumerate(self.puzzle):
+            position = -1
+            for i,char in enumerate(line):
+                if char == word_reverse[finded] and (x == None or i == x+1): 
+                    position = i
+            
+            if position == -1:
+                x = None
+                finded = 0
+            else:
+                if x == None and finded == 0:
+                    finded += 1
+                    x = position
+                elif x + 1 == position:
+                    finded += 1
+                    x = position
+
+            if finded == len(word_reverse):
+                return Point(x,index)
+
+    def search_bottom_left_to_top_right(self, word):
+        word_reverse = list(word)
+        word_reverse.reverse()
+        word_reverse = ''.join(word_reverse)
+
+        finded = 0
+        x = None
+
+        for index, line in enumerate(self.puzzle):
+            position = -1
+            for i,char in enumerate(line):
+                if char == word_reverse[finded] and (x == None or i == x-1 ): 
+                    position = i
+            
+            if position == -1:
+                x = None
+                finded = 0
+            else:
+                if x == None and finded == 0:
+                    finded += 1
+                    x = position
+                elif x - 1 == position:
+                    finded += 1
+                    x = position
+
+            if finded == len(word_reverse):
+                return Point(x,index)
+
 
     def search_bottom_to_top(self, word):
         word_reverse = list(word)
@@ -95,67 +228,26 @@ class WordSearch:
         for index, line in enumerate(self.puzzle):
             position = -1
             for i,char in enumerate(line):
-                if char == word[finded] and (i == x or x == None): 
+                if char == word_reverse[finded] and (i == x or x == None): 
                     position = i
             
             if position == -1:
                 x = None
                 finded = 0
-            else:
-                if x == None and finded == 0:
-                    finded += 1
-                    x = position
-                elif x == position:
-                    finded += 1
+                for i,char in enumerate(line):
+                    if char == word_reverse[finded] and (i == x or x == None): 
+                        position = i
+            if x == None and finded == 0 and position != -1:
+                finded += 1
+                x = position
+            elif x == position:
+                finded += 1
 
             if finded == len(word_reverse):
                 return Point(x,index)
 
 
 
-
-puzzle = WordSearch(
-            [
-                "jefblpepre",
-                "camdcimgtc",
-                "oivokprjsm",
-                "pbwasqroua",
-                "rixilelhrs",
-                "wolcqlirpc",
-                "screeaumgr",
-                "alxhpburyi",
-                "jalaycalmp",
-                "clojurermt",
-            ]
-        )
-
-#(Point(0, 0), Point(5, 0)
-#print(puzzle.search("poc"))
-
-puzzle1 = WordSearch(["rixilelhrs"])
-#(Point(5, 0), Point(0, 0)
-#print(puzzle1.search("elixir"))
-
-puzzle3 = WordSearch(
-            [
-                "jefblpepre",
-                "camdcimgtc",
-                "oivokprjsm",
-                "pbwasqroua",
-                "rixilelhrs",
-                "wolcqlirpc",
-                "screeaumgr",
-                "alxhpburyi",
-                "jalaycalmp",
-                "clojurermt",
-            ]
-)
-#(Point(0, 9), Point(6, 9)
-#print(puzzle.search("clojure"))
-#(Point(5, 4), Point(0, 4)
-#print(puzzle.search("elixir"))
-#(Point(9, 0), Point(9, 9)
-#print(puzzle.search("ecmascript"))
 
 
 
