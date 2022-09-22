@@ -23,7 +23,7 @@ def answer(question):
             if  operation not in operations:
                 raise ValueError("unknown operation")
         elif is_a_number(word) and is_the_last(i,words):
-            if result == None:
+            if result is None:
                 result = float(word)
         if word in operations:
             number_next = get_number_next(words, i, word)  
@@ -33,7 +33,7 @@ def answer(question):
             except:
                 raise ValueError("syntax error")
     
-    if result == None:
+    if result is None:
         raise ValueError("syntax error")
 
     return format_result(result)
@@ -53,7 +53,7 @@ def is_a_number(str):
     return str[-1].isdigit()
 
 def get_result(result, number_prev, number_next, operation):
-    if result == None:
+    if result is None:
         return operations[operation](float(number_prev), number_next)
     else: 
         return operations[operation](result, number_next)

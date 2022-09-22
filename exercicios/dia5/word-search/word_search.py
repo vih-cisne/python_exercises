@@ -11,7 +11,7 @@ class Point:
 
     def __eq__(self, other):
         #other is a tuple?
-        if other != None:
+        if not other is None:
             return self.x == other[0].x and self.y == other[0].y
 
 
@@ -40,7 +40,7 @@ class WordSearch:
 
 
         for position in searches.values():
-            if position  != None:
+            if not position is None:
                 return position
 
     
@@ -67,7 +67,7 @@ class WordSearch:
         for index, line in enumerate(self.puzzle):
             position = -1
             for i,char in enumerate(line):
-                if char == word[finded] and (i == x or x == None): 
+                if char == word[finded] and (i == x or x is None): 
                     position = i 
             
             if position == -1:
@@ -77,7 +77,7 @@ class WordSearch:
                     if char == word[finded]: 
                         position = i
 
-            if x == None and finded == 0:
+            if x is None and finded == 0:
                 finded += 1
                 y = index
                 x = position
@@ -96,7 +96,7 @@ class WordSearch:
         for index, line in enumerate(self.puzzle):
             position = -1
             for i,char in enumerate(line):
-                if char == word[finded] and (x == None or i == x+1): 
+                if char == word[finded] and (x is None or i == x+1): 
                     position = i
             
             if position == -1:
@@ -106,7 +106,7 @@ class WordSearch:
                     if char == word[finded]: 
                         position = i
 
-            if x == None and finded == 0:
+            if x is None and finded == 0:
                 finded += 1
                 y = index
                 x = position
@@ -127,16 +127,16 @@ class WordSearch:
             position = -1
             
             for i,char in enumerate(line):
-                if char == word[finded] and (x == None or i == x-1): 
+                if char == word[finded] and (x is None or i == x-1): 
                     position = i 
             
             if position == -1:
                 x = None
                 finded = 0
                 for i,char in enumerate(line):
-                    if char == word[finded] and (x == None or i == x-1): 
+                    if char == word[finded] and (x is None or i == x-1): 
                         position = i
-            if x == None and finded == 0 and position != -1:
+            if x is None and finded == 0 and position != -1:
                 finded += 1
                 y = index
                 x = position
@@ -155,7 +155,7 @@ class WordSearch:
         for index, line in enumerate(self.puzzle):
             position = -1
             for i,char in enumerate(line):
-                if char == word_reverse[finded] and (x == None or i == x+1): 
+                if char == word_reverse[finded] and (x is None or i == x+1): 
                     position = i
             
             if position == -1:
@@ -165,7 +165,7 @@ class WordSearch:
                     if char == word_reverse[finded]: 
                         position = i
 
-            if x == None and finded == 0:
+            if x is None and finded == 0:
                 finded += 1
                 x = position
             elif x + 1 == position:
@@ -183,7 +183,7 @@ class WordSearch:
         for index, line in enumerate(self.puzzle):
             position = -1
             for i,char in enumerate(line):
-                if char == word_reverse[finded] and (x == None or i == x-1 ): 
+                if char == word_reverse[finded] and (x is None or i == x-1 ): 
                     position = i
             
             if position == -1:
@@ -193,7 +193,7 @@ class WordSearch:
                     if char == word_reverse[finded]: 
                         position = i
 
-            if x == None and finded == 0:
+            if x is None and finded == 0:
                 finded += 1
                 x = position
             elif x - 1 == position:
@@ -212,16 +212,16 @@ class WordSearch:
         for index, line in enumerate(self.puzzle):
             position = -1
             for i,char in enumerate(line):
-                if char == word_reverse[finded] and (i == x or x == None): 
+                if char == word_reverse[finded] and (i == x or x is None): 
                     position = i
             
             if position == -1:
                 x = None
                 finded = 0
                 for i,char in enumerate(line):
-                    if char == word_reverse[finded] and (i == x or x == None): 
+                    if char == word_reverse[finded] and (i == x or x is None): 
                         position = i
-            if x == None and finded == 0 and position != -1:
+            if x is None and finded == 0 and position != -1:
                 finded += 1
                 x = position
             elif x == position:
