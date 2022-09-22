@@ -1,5 +1,7 @@
 
-def create_inventory(items, inventory= {}):
+def create_inventory(items):
+
+    inventory= {}
 
     for item in items:
         if item in inventory:
@@ -14,8 +16,6 @@ def create_inventory(items, inventory= {}):
     """
 
 def add_items(inventory, items):
-
-    #return create_inventory(items, inventory=inventory)
 
     for item in items:
         if item in inventory:
@@ -71,15 +71,8 @@ def list_inventory(inventory):
     values_availables = availables.values()
 
     return list(zip(keys_availables, values_availables))
+    
     """
     :param inventory: dict - an inventory dictionary.
     :return: list of tuples - list of key, value pairs from the inventory dictionary.
-    """
-
-    """
-    keys_with_unavailables = inventory.keys()
-
-    for key in keys_with_unavailables:
-        if inventory[key] > 0:
-            availables[key] = inventory[key]
     """
