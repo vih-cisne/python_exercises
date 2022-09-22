@@ -65,9 +65,9 @@ class PhoneNumber:
         finded_letters = re.search(r"[a-zA-Z]", number)
         finded_punctuations = re.search(r"[?@_:!]", number)
 
-        if finded_letters != None:
+        if not finded_letters is None:
             raise ValueError("letters not permitted")
-        if finded_punctuations != None:
+        if not finded_punctuations is None:
             raise ValueError("punctuations not permitted")
 
 
