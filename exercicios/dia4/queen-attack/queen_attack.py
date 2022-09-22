@@ -19,10 +19,10 @@ class Queen:
             raise ValueError("Invalid queen position: both queens in the same square")
 
         sum_this_queen = self.row + self.column
-        sub_this_queen = self.row - self.column
+        sub_this_queen = (self.row - self.column)*(-1)
 
         sum_other_queen = another_queen.row + another_queen.column
-        sub_other_queen = another_queen.row - another_queen.column
+        sub_other_queen = (another_queen.row - another_queen.column)*(-1)
         
         if self.row == another_queen.row:
             return True

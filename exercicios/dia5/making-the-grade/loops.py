@@ -3,7 +3,7 @@ import functools
 
 def round_scores(student_scores):
 
-    return [round(rounded) for rounded in student_scores]
+    return [round(grade) for grade in student_scores]
     """
     :param student_scores: list of student exam scores as float or int.
     :return: list of student scores *rounded* to nearest integer value.
@@ -33,11 +33,11 @@ def above_threshold(student_scores, threshold):
 
 def letter_grades(highest):
 
-    div = (highest - 40)/4
+    step = (highest - 40)/4
 
-    groups = [int(41 + (div*(i))) for i in range(4)]
+    groups_grades = [int(41 + (step*(i))) for i in range(4)]
 
-    return groups
+    return groups_grades
 
 
     """
