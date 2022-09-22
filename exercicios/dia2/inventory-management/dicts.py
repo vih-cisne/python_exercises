@@ -65,20 +65,21 @@ def remove_item(inventory, item):
 
 def list_inventory(inventory):
 
-    availables = {}
-
-    keys_with_unavailables = inventory.keys()
-
-    for key in keys_with_unavailables:
-        if inventory[key] > 0:
-            availables[key] = inventory[key]
+    availables = {item:value for (item, value) in inventory.items() if value > 0}
 
     keys_availables = availables.keys()
     values_availables = availables.values()
-
 
     return list(zip(keys_availables, values_availables))
     """
     :param inventory: dict - an inventory dictionary.
     :return: list of tuples - list of key, value pairs from the inventory dictionary.
+    """
+
+    """
+    keys_with_unavailables = inventory.keys()
+
+    for key in keys_with_unavailables:
+        if inventory[key] > 0:
+            availables[key] = inventory[key]
     """
