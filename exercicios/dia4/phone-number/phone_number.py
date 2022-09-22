@@ -18,8 +18,8 @@ class PhoneNumber:
         
         groups = number_clean.split()
 
-        if len(groups) > 3:
-            if not groups[0].startswith('1'):
+        if len(groups) == 4:
+            if not groups[0] == '1':
                     raise ValueError("11 digits must start with 1")
             groups = groups[len(groups)-3:]
         if len(groups) == 1:
@@ -62,12 +62,12 @@ class PhoneNumber:
                 raise ValueError("exchange code cannot start with one")
 
     def errors_letters_or_punctuations(self, number):
-        find_letters = re.search(r"[a-zA-Z]", number)
-        find_punctuations = re.search(r"[?@_:!]", number)
+        finded_letters = re.search(r"[a-zA-Z]", number)
+        finded_punctuations = re.search(r"[?@_:!]", number)
 
-        if find_letters != None:
+        if finded_letters != None:
             raise ValueError("letters not permitted")
-        if find_punctuations != None:
+        if finded_punctuations != None:
             raise ValueError("punctuations not permitted")
 
 
